@@ -3,33 +3,35 @@ var express = require ('express');
 //THis creates a new instance of EXPRESS
 var app = express();
 
+var handlebars = require('express-handlebars').create({defaultLayout:'main'});
+app.engine('handlebars', handlebars.engine);
+app.set('view engine', 'handlebars');
+
 //Specifing the route. / equals the home page
-app.get('/', function(request, response){
-	var text = "<h1>Welcome To Jamii, Your Community Kitchen</h1>";
-	text += '<h2><a href="/about">VEGAN</a></h3>';
-	text += '<h2><a href="/about2">VEGETARIAN</a></h3>';
-	text += '<h2><a href="/menu">MENU</a></h3>';
-	response.send(text);
+app.get("/", function(request, response){
+
+	var myData={
+		name: 'Krystle'
+		city: 'Winston-Salem'
+		state: 'North Carolina'
+	}
+	
+	response.render("home", myData);
 });
 
-app.get('/about', function(request, response){
+/*app.get("/menu", function(request, response){
+	
+	var myData={
+		name: 'Krystle'
+		city: 'Winston-Salem'
+		state: 'North Carolina'
+	};
+	response.render("menu", myData);
+
 	var text = "<h1>What it means to be VEGAN</h1>";
 	text += '<h2><a href="/">HOME</a></h2';
 	response.send(text);
-});
-
-app.get('/about2', function(request, response){
-	var text = "<h1>What it means to be VEGETARIAN</h1>";
-	text += '<h2><a href="/">HOME</a></h2';
-	response.send(text);
-});
-
-app.get('/menu', function(request, response){
-	var text ="<h1>See What's Cooking!";
-	text += '<h2><a href="/">HOME</a></h2';
-	response.send(text);
-});
-
+}); */
 
 
 //Now we create the server. Listen for traffic on port 3000. THis is your server
